@@ -1,13 +1,4 @@
-def _fix_time(s: str):
-    match s:
-        case "S":
-            return 1
-        case "F":
-            return 5
-        case "M":
-            return 8
-        case _:
-            raise ValueError(f"{s} is not a valid action")
+FIX_TIMES = {"S": 1, "F": 5, "M": 8}
 
 
 def calculate_minutes(mopeds: list[str], distance: list[int]) -> int:
@@ -15,9 +6,7 @@ def calculate_minutes(mopeds: list[str], distance: list[int]) -> int:
         "distance between mopeds must match number of mopeds"
     )
 
-    loc_s = 0
-    loc_f = 0
-    loc_m = 0
+    loc_s, loc_f, loc_m = 0, 0, 0
 
     total = 0
     for idx, moped in enumerate(mopeds):
@@ -33,7 +22,7 @@ def calculate_minutes(mopeds: list[str], distance: list[int]) -> int:
             total += sum(distance[loc_m:idx])
             loc_m = idx
 
-        total += sum(map(_fix_time, moped))
+        total += sum(FIX_TIMES[c] for c in moped)
 
     return total
 
