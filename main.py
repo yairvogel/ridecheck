@@ -15,9 +15,27 @@ def calculate_minutes(mopeds: list[str], distance: list[int]) -> int:
         "distance between mopeds must match number of mopeds"
     )
 
-    # assuming single moped
-    assert len(mopeds) == 1
-    return sum(map(_fix_time, mopeds[0]))
+    loc_s = 0
+    loc_f = 0
+    loc_m = 0
+
+    total = 0
+    for idx, moped in enumerate(mopeds):
+        # if employee needs to go to current moped
+        # they need to travel to that moped
+        if "S" in moped:
+            total += sum(distance[loc_s:idx])
+            loc_s = idx
+        if "F" in moped:
+            total += sum(distance[loc_f:idx])
+            loc_f = idx
+        if "M" in moped:
+            total += sum(distance[loc_m:idx])
+            loc_m = idx
+
+        total += sum(map(_fix_time, moped))
+
+    return total
 
 
 if __name__ == "__main__":
