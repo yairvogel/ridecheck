@@ -8,18 +8,27 @@ def calculate_minutes(mopeds: list[str], distance: list[int]) -> int:
 
     loc_s, loc_f, loc_m = 0, 0, 0
 
+    # prefix-sum of the distances.
+    # Computed such that dist_sum[i] - dist_sum[j] == sum(distance[j:i])
+    dist_sum: list[int] = []
+    t = 0
+    for d in distance:
+        dist_sum.append(t)
+        t += d
+    dist_sum.append(t)
+
     total = 0
     for idx, moped in enumerate(mopeds):
         # if employee needs to go to current moped
         # they need to travel to that moped
         if "S" in moped:
-            total += sum(distance[loc_s:idx])
+            total += dist_sum[idx] - dist_sum[loc_s]
             loc_s = idx
         if "F" in moped:
-            total += sum(distance[loc_f:idx])
+            total += dist_sum[idx] - dist_sum[loc_f]
             loc_f = idx
         if "M" in moped:
-            total += sum(distance[loc_m:idx])
+            total += dist_sum[idx] - dist_sum[loc_m]
             loc_m = idx
 
         total += sum(FIX_TIMES[c] for c in moped)

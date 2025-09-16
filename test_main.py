@@ -21,6 +21,11 @@ from main import calculate_minutes
             [4, 17, 3, 6, 9, 11],
             198,
         ),  # Third example from case.md
+        # Mopeds without treatments
+        (["", "", "M"], [1, 2], 11),
+        # Multiple tasks at same moped (all roles present):
+        (["SSFFMM"], [], 28),
+        (["", "SMF"], [10], 44),
     ],
 )
 def test_calculate_minutes(mopeds: list[str], distance: list[int], expected: int):
