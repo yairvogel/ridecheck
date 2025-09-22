@@ -37,7 +37,6 @@ def calculate_minutes(mopeds: list[str], distance: list[int]) -> int:
 
 
 if __name__ == "__main__":
-    m = ["S"]
-    d: list[int] = []
-    res = calculate_minutes(["S"], [])
+    m, d = (["S", "F", "SF", "FF"], [2, 4, 3])
+    res = calculate_minutes(m, d)
     print(f"mopeds=[{','.join(m)}]; distance=[{','.join(map(str, d))}]; result={res}")
